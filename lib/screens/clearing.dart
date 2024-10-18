@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ClearingPage extends StatefulWidget {
   const ClearingPage({super.key});
@@ -139,9 +140,40 @@ class _ClearingPageState extends State<ClearingPage> {
             shadowColor: Colors.black.withOpacity(0.2),
             elevation: 5,
           ),
-          onPressed: () => setState(() {
+          onPressed: () async {
             _selectedOption = value; // Update selected option
-          }),
+            print(value);
+            setState(() {});
+            if (value == 1) {
+              final Uri _url = Uri.parse(
+                  'https://cfcterminal.com/documentations/add-form-m/');
+
+              if (!await launchUrl(_url)) {
+                throw Exception('Could not launch $_url');
+              }
+            } else if (value == 2) {
+              final Uri _url =
+                  Uri.parse('https://cfcterminal.com/documentations/add-paar/');
+
+              if (!await launchUrl(_url)) {
+                throw Exception('Could not launch $_url');
+              }
+            } else if (value == 3) {
+              final Uri _url = Uri.parse(
+                  'https://cfcterminal.com/documentations/export-processing/');
+
+              if (!await launchUrl(_url)) {
+                throw Exception('Could not launch $_url');
+              }
+            } else {
+              final Uri _url = Uri.parse(
+                  'https://cfcterminal.com/documentations/other-payment/');
+
+              if (!await launchUrl(_url)) {
+                throw Exception('Could not launch $_url');
+              }
+            }
+          },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

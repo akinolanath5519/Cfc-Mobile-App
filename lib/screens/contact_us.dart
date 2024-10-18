@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ContactUsPage extends StatelessWidget {
   const ContactUsPage({super.key});
@@ -18,9 +19,13 @@ class ContactUsPage extends StatelessWidget {
               children: [
                 // Call Us Button
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     // Add your call functionality here
-                    print('Call Us button pressed');
+                    final Uri _url = Uri.parse('tel:0903125533504');
+
+                    if (!await launchUrl(_url)) {
+                      throw Exception('Could not launch $_url');
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromARGB(
@@ -38,9 +43,15 @@ class ContactUsPage extends StatelessWidget {
                 ),
                 // WhatsApp Button
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     // Add your WhatsApp functionality here
-                    print('WhatsApp button pressed');
+                    final Uri _whatsappUrl =
+                        Uri.parse('https://wa.me/2347030949532');
+
+                    if (!await launchUrl(_whatsappUrl,
+                        mode: LaunchMode.externalApplication)) {
+                      throw Exception('Could not launch $_whatsappUrl');
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromARGB(
@@ -78,8 +89,8 @@ class ContactUsPage extends StatelessWidget {
             ),
             const SizedBox(height: 10), // Space between contact title and text
             Text(
-              'Phone: +234 123 456 7890\n'
-              'Email: contact@yourcompany.com',
+              'Phone: +234 903125533504\n'
+              'Email: cdocumentation@cfcterminal.com',
               style: TextStyle(fontSize: 16),
             ),
           ],

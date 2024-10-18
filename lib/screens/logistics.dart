@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart'; // Import for rootBundle
+import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart'; // Import for rootBundle
 
 class LogisticsPage extends StatefulWidget {
   const LogisticsPage({super.key});
@@ -117,11 +118,17 @@ class _LogisticsPageState extends State<LogisticsPage> {
                               elevation:
                                   5, // Slight elevation for shadow effect
                             ),
-                            onPressed: () {
+                            onPressed: () async {
                               setState(() {
                                 _selectedOption =
                                     index + 1; // Update selected option
                               });
+                              final Uri _url = Uri.parse(
+                                  'https://cfcterminal.com/documentations/logistics-processing/');
+
+                              if (!await launchUrl(_url)) {
+                                throw Exception('Could not launch $_url');
+                              }
                             },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment
@@ -151,10 +158,17 @@ class _LogisticsPageState extends State<LogisticsPage> {
                                     visualDensity: const VisualDensity(
                                         horizontal: -2,
                                         vertical: -2), // Increase the size
-                                    onChanged: (int? value) {
+                                    onChanged: (int? value) async {
                                       setState(() {
                                         _selectedOption = value!;
                                       });
+                                      final Uri _url = Uri.parse(
+                                          'https://cfcterminal.com/documentations/logistics-processing/');
+
+                                      if (!await launchUrl(_url)) {
+                                        throw Exception(
+                                            'Could not launch $_url');
+                                      }
                                     },
                                   ),
                                 ),

@@ -3,6 +3,9 @@ import 'package:cfc/screens/policy.dart';
 import 'package:cfc/screens/profile.dart';
 import 'package:cfc/screens/support.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../controller/auth_controller.dart';
 
 class Appbar extends StatefulWidget {
   const Appbar({super.key});
@@ -80,28 +83,7 @@ class _AppbarState extends State<Appbar> {
 
   /// Builds the welcome text with a RichText widget.
   Widget _buildWelcomeText() {
-    return RichText(
-      text: TextSpan(
-        children: const [
-          TextSpan(
-            text: 'Welcome,\n',
-            style: TextStyle(
-              fontSize: 17,
-              fontWeight: FontWeight.normal,
-              color: Colors.black,
-            ),
-          ),
-          TextSpan(
-            text: 'SEGUN WILLIAMS',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
-          ),
-        ],
-      ),
-    );
+    return NameFirebase();
   }
 
   /// Builds the welcome image.
@@ -136,5 +118,56 @@ class _AppbarState extends State<Appbar> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+}
+
+class NameFirebase extends GetView<AuthController> {
+  const NameFirebase({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<Map<String, dynamic>?>(
+      future: controller.getUserProfileFromFirestore(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Text(""); // Placeholder while loading
+        }
+
+        if (snapshot.hasError) {
+          return Text("Error: ${snapshot.error}");
+        }
+
+        if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return const Text("No user data found.");
+        }
+
+        // Extract first name and last name from the snapshot data
+        final firstName = snapshot.data!["first_name"] ?? "User";
+        final lastName = snapshot.data!["last_name"] ?? "";
+
+        return RichText(
+          text: TextSpan(
+            children: [
+              const TextSpan(
+                text: 'Welcome,\n',
+                style: TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.black,
+                ),
+              ),
+              TextSpan(
+                text: '$firstName $lastName',
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }

@@ -1,4 +1,4 @@
-package com.example.flutter_node_auth
+package com.example.cfc_freight
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart'; // Import for rootBundle
+import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart'; // Import for rootBundle
 
 class CustomDutyPage extends StatefulWidget {
   const CustomDutyPage({super.key});
@@ -126,10 +127,16 @@ class _CustomDutyPageState extends State<CustomDutyPage> {
           shadowColor: Colors.black.withOpacity(0.2), // Add shadow color
           elevation: 5, // Slight elevation for shadow effect
         ),
-        onPressed: () {
+        onPressed: () async {
           setState(() {
             _selectedOption = index + 1; // Update selected option
           });
+          final Uri _url = Uri.parse(
+              'https://cfcterminal.com/documentations/add-duty-payment/');
+
+          if (!await launchUrl(_url)) {
+            throw Exception('Could not launch $_url');
+          }
         },
         child: _buildButtonContent(label, index),
       ),

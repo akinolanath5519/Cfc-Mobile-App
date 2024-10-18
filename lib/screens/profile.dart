@@ -1,101 +1,123 @@
 import 'package:cfc/screens/edit_profile.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class ProfilePage extends StatefulWidget {
+import '../controller/auth_controller.dart';
+
+class ProfilePage extends GetView<AuthController> {
   const ProfilePage({super.key});
 
   @override
-  _ProfilePageState createState() => _ProfilePageState();
-}
-
-class _ProfilePageState extends State<ProfilePage> {
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView( // Add SingleChildScrollView
+      body: SingleChildScrollView(
+        // Add SingleChildScrollView
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Profile picture
-            Center(
-              child: CircleAvatar(
-                radius: 60,
-                backgroundImage: AssetImage('assets/images/profile.jpg'), // Replace with your profile image
-                backgroundColor: Colors.grey[300],
-              ),
-            ),
-            const SizedBox(height: 20),
+        child: FutureBuilder<Map<String, dynamic>?>(
+            future: controller.getUserProfileFromFirestore(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Text(""); // Placeholder while loading
+              }
 
-            // User name
-            Center(
-              child: Text(
-                'Segun Williams', // Replace with dynamic data
-                style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
+              if (snapshot.hasError) {
+                return Text("Error: ${snapshot.error}");
+              }
+
+              if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                return const Text("No user data found.");
+              }
+
+              // Extract first name and last name from the snapshot data
+              final firstName = snapshot.data!["first_name"] ?? "User";
+              final lastName = snapshot.data!["last_name"] ?? "";
+              final email = snapshot.data!["email"] ?? "";
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Profile picture
+                  Center(
+                    child: CircleAvatar(
+                      radius: 60,
+                      backgroundImage: AssetImage(
+                          'assets/images/profile.jpg'), // Replace with your profile image
+                      backgroundColor: Colors.grey[300],
                     ),
-              ),
-            ),
-            const SizedBox(height: 8),
+                  ),
+                  const SizedBox(height: 20),
 
-            // Email
-            Center(
-              child: Text(
-                'segun@example.com', // Replace with dynamic data
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Colors.grey[600],
+                  // User name
+                  Center(
+                    child: Text(
+                      '$firstName $lastName', // Replace with dynamic data
+                      style:
+                          Theme.of(context).textTheme.headlineLarge?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
                     ),
-              ),
-            ),
-            const SizedBox(height: 20),
+                  ),
+                  const SizedBox(height: 8),
 
-            // Your Account Section
-            _buildSectionTitle(context, 'Your Account'),
-            _buildActionButton(
-              icon: Icons.person,
-              label: 'Edit Profile',
-              onPressed: () {
-                // Navigate to EditProfilePage
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const EditProfilePage()),
-                );
-              },
-            ),
-            const SizedBox(height: 16),
+                  // Email
+                  Center(
+                    child: Text(
+                      '$email', // Replace with dynamic data
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: Colors.grey[600],
+                          ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
 
-            // App Settings Section
-            _buildSectionTitle(context, 'App Settings'),
-            _buildActionButton(
-              icon: Icons.support,
-              label: 'Support',
-              onPressed: () {
-                // Handle support action
-              },
-            ),
-            const SizedBox(height: 16),
-            _buildActionButton(
-              icon: Icons.policy,
-              label: 'Terms & Services',
-              onPressed: () {
-                // Handle terms and services action
-              },
-            ),
-            const SizedBox(height: 16),
+                  // Your Account Section
+                  _buildSectionTitle(context, 'Your Account'),
+                  _buildActionButton(
+                    icon: Icons.person,
+                    label: 'Edit Profile',
+                    onPressed: () {
+                      // Navigate to EditProfilePage
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const EditProfilePage()),
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 16),
 
-            // Log Out Button
-            _buildActionButton(
-              icon: Icons.logout,
-              label: 'Log Out',
-              onPressed: () {
-                // Handle log out action
-              },
-              backgroundColor: Colors.redAccent,
-              textColor: Colors.white,
-            ),
-          ],
-        ),
+                  // App Settings Section
+                  _buildSectionTitle(context, 'App Settings'),
+                  _buildActionButton(
+                    icon: Icons.support,
+                    label: 'Support',
+                    onPressed: () {
+                      // Handle support action
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  _buildActionButton(
+                    icon: Icons.policy,
+                    label: 'Terms & Services',
+                    onPressed: () {
+                      // Handle terms and services action
+                    },
+                  ),
+                  const SizedBox(height: 16),
+
+                  // Log Out Button
+                  _buildActionButton(
+                    icon: Icons.logout,
+                    label: 'Log Out',
+                    onPressed: () {
+                      controller.logout();
+                    },
+                    backgroundColor: Colors.redAccent,
+                    textColor: Colors.white,
+                  ),
+                ],
+              );
+            }),
       ),
     );
   }
@@ -130,7 +152,8 @@ class _ProfilePageState extends State<ProfilePage> {
           side: const BorderSide(color: Colors.grey, width: 1),
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween, // Space between icon/text and ">" icon
+          mainAxisAlignment: MainAxisAlignment
+              .spaceBetween, // Space between icon/text and ">" icon
           children: [
             // Main button content
             Row(

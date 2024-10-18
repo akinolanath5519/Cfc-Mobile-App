@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SupportPage extends StatefulWidget {
   const SupportPage({super.key});
@@ -42,22 +43,42 @@ class _SupportPageState extends State<SupportPage> {
         _buildContactOption(
           icon: Icons.phone,
           label: 'Call Us',
-          onPressed: () {
-            // Handle call action
+          onPressed: () async {
+            final Uri _url = Uri.parse('tel:0903125533504');
+
+            if (!await launchUrl(_url)) {
+              throw Exception('Could not launch $_url');
+            }
           },
         ),
         _buildContactOption(
           icon: Icons.email,
           label: 'Email Us',
-          onPressed: () {
-            // Handle email action
+          onPressed: () async {
+            final Uri _emailUrl = Uri(
+              scheme: 'mailto',
+              path:
+                  'documentation@cfcterminal.com', // Replace with the recipient's email
+              query:
+                  'subject=&body=How are you?', // Optional: Prefill subject and body
+            );
+
+            if (!await launchUrl(_emailUrl,
+                mode: LaunchMode.externalApplication)) {
+              throw Exception('Could not launch $_emailUrl');
+            }
           },
         ),
         _buildContactOption(
           icon: Icons.chat,
           label: 'WhatsApp',
-          onPressed: () {
-            // Handle WhatsApp action
+          onPressed: () async {
+            final Uri _whatsappUrl = Uri.parse('https://wa.me/2347030949532');
+
+            if (!await launchUrl(_whatsappUrl,
+                mode: LaunchMode.externalApplication)) {
+              throw Exception('Could not launch $_whatsappUrl');
+            }
           },
         ),
       ],
@@ -92,12 +113,17 @@ class _SupportPageState extends State<SupportPage> {
               backgroundColor: Colors.transparent, // Transparent background
             ),
             onPressed: onPressed,
-            child: Icon(icon, size: 30, color: Colors.red), // Icon color matches primary color
+            child: Icon(icon,
+                size: 30,
+                color: Colors.red), // Icon color matches primary color
           ),
           const SizedBox(height: 8),
           Text(
             label,
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium
+                ?.copyWith(fontWeight: FontWeight.w600),
           ),
         ],
       ),
