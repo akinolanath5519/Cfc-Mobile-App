@@ -164,7 +164,7 @@ We reserve the right to modify this Privacy Policy at any time. Any changes will
 10. Contact Us  
 If you have any questions or concerns about this Privacy Policy, please contact us at:  
 Email: documentation@cfcterminal.com  
-Phone: +234903125533504  
+Phone: +2349031255504  
 
 """,
             style: Theme.of(context).textTheme.bodyMedium,

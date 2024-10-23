@@ -44,7 +44,7 @@ class _SupportPageState extends State<SupportPage> {
           icon: Icons.phone,
           label: 'Call Us',
           onPressed: () async {
-            final Uri _url = Uri.parse('tel:0903125533504');
+            final Uri _url = Uri.parse('tel:+23490 3125 5504');
 
             if (!await launchUrl(_url)) {
               throw Exception('Could not launch $_url');

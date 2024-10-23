@@ -87,22 +87,22 @@ class ProfilePage extends GetView<AuthController> {
                   const SizedBox(height: 16),
 
                   // App Settings Section
-                  _buildSectionTitle(context, 'App Settings'),
-                  _buildActionButton(
-                    icon: Icons.support,
-                    label: 'Support',
-                    onPressed: () {
-                      // Handle support action
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                  _buildActionButton(
-                    icon: Icons.policy,
-                    label: 'Terms & Services',
-                    onPressed: () {
-                      // Handle terms and services action
-                    },
-                  ),
+                  // _buildSectionTitle(context, 'App Settings'),
+                  // _buildActionButton(
+                  //   icon: Icons.support,
+                  //   label: 'Support',
+                  //   onPressed: () {
+                  //     // Handle support action
+                  //   },
+                  // ),
+                  // const SizedBox(height: 16),
+                  // _buildActionButton(
+                  //   icon: Icons.policy,
+                  //   label: 'Terms & Services',
+                  //   onPressed: () {
+                  //     // Handle terms and services action
+                  //   },
+                  // ),
                   const SizedBox(height: 16),
 
                   // Log Out Button

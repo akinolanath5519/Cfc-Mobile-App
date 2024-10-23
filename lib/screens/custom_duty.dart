@@ -39,12 +39,12 @@ class _CustomDutyPageState extends State<CustomDutyPage> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               _buildHeader(),
-              const SizedBox(height: 10), // Space before buttons
+              const SizedBox(height: 150), // Space before buttons
               _buildButtonList(), // Button list centered
-              const SizedBox(height: 15), // Space at the bottom of the buttons
             ],
           ),
         ),

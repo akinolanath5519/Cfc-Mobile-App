@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
     return Sizer(builder: (context, orientation, deviceType) {
       return GetMaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Cfc',
+        title: 'CFC FREIGHT',
         theme: _buildAppTheme(),
         home: SplashScreen(), // Set Appbar as the home screen
       );

@@ -21,7 +21,7 @@ class ContactUsPage extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () async {
                     // Add your call functionality here
-                    final Uri _url = Uri.parse('tel:0903125533504');
+                    final Uri _url = Uri.parse('tel:+23490 3125 5504');
 
                     if (!await launchUrl(_url)) {
                       throw Exception('Could not launch $_url');
@@ -89,8 +89,9 @@ class ContactUsPage extends StatelessWidget {
             ),
             const SizedBox(height: 10), // Space between contact title and text
             Text(
-              'Phone: +234 903125533504\n'
-              'Email: cdocumentation@cfcterminal.com',
+              'Phone: +23490 3125 5504\n'
+              'Email: documentation@cfcterminal.com\n'
+              'Website: www.cfcterminal.com \nAddress: 4 Ilorin Str, Masha Rd, Surulere, Lagos.\n',
               style: TextStyle(fontSize: 16),
             ),
           ],
