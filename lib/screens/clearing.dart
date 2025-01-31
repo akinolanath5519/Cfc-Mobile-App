@@ -1,6 +1,7 @@
+import 'package:cfc/screens/webview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:get/get.dart';
 
 class ClearingPage extends StatefulWidget {
   const ClearingPage({super.key});
@@ -42,7 +43,7 @@ class _ClearingPageState extends State<ClearingPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildHeader(),
+              //_buildHeader(),
               const SizedBox(height: 8),
               _buildSubtitle(),
               const SizedBox(height: 10),
@@ -65,27 +66,27 @@ class _ClearingPageState extends State<ClearingPage> {
     );
   }
 
-  Widget _buildHeader() {
-    return Row(
-      children: [
-        IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.pop(context),
-        ),
-        const SizedBox(width: 6),
-        const Expanded(
-          child: Text(
-            'Clearing Documents Processing',
-            style: TextStyle(
-              fontSize: 17,
-              fontWeight: FontWeight.bold,
-              color: Color.fromARGB(255, 235, 22, 11),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
+  // Widget _buildHeader() {
+  //   return Row(
+  //     children: [
+  //       IconButton(
+  //         icon: const Icon(Icons.arrow_back, color: Colors.black),
+  //         onPressed: () => Navigator.pop(context),
+  //       ),
+  //       const SizedBox(width: 6),
+  //       const Expanded(
+  //         child: Text(
+  //           'Clearing Documents Processing',
+  //           style: TextStyle(
+  //             fontSize: 17,
+  //             fontWeight: FontWeight.bold,
+  //             color: Color.fromARGB(255, 235, 22, 11),
+  //           ),
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 
   Widget _buildSubtitle() {
     return const Center(
@@ -107,8 +108,8 @@ class _ClearingPageState extends State<ClearingPage> {
     final buttonLabels = [
       'FORM M PROCESSING',
       'PAAR PROCESSING',
-      'EXPORT PROCESSING',
-      'OTHER PAYMENT',
+      'CFC AFFILIATE PROGRAM',
+      'PORTS & TERMINAL NEWS',
     ];
 
     return Expanded(
@@ -142,36 +143,55 @@ class _ClearingPageState extends State<ClearingPage> {
           ),
           onPressed: () async {
             _selectedOption = value; // Update selected option
-            print(value);
             setState(() {});
             if (value == 1) {
-              final Uri _url = Uri.parse(
-                  'https://cfcterminal.com/documentations/add-form-m/');
+              Get.to(() => WebViewGen(
+                    url: 'https://cfcterminal.com/documentations/add-form-m/',
+                  ));
+              // final Uri _url = Uri.parse(
+              //     'https://cfcterminal.com/documentations/add-form-m/');
 
-              if (!await launchUrl(_url)) {
-                throw Exception('Could not launch $_url');
-              }
+              // if (!await launchUrl(_url)) {
+              //   throw Exception('Could not launch $_url');
+              // }
             } else if (value == 2) {
-              final Uri _url =
-                  Uri.parse('https://cfcterminal.com/documentations/add-paar/');
+              Get.to(() => WebViewGen(
+                    url: 'https://cfcterminal.com/documentations/add-paar/',
+                  ));
 
-              if (!await launchUrl(_url)) {
-                throw Exception('Could not launch $_url');
-              }
+              // final Uri _url =
+              //     Uri.parse('https://cfcterminal.com/documentations/add-paar/');
+
+              // if (!await launchUrl(_url)) {
+              //   throw Exception('Could not launch $_url');
+              // }
             } else if (value == 3) {
-              final Uri _url = Uri.parse(
-                  'https://cfcterminal.com/documentations/export-processing/');
+              Get.to(
+                () => WebViewGen(
+                  url:
+                      'https://cfcterminal.com/documentations/cfc-affiliate-program/',
+                ),
+              );
 
-              if (!await launchUrl(_url)) {
-                throw Exception('Could not launch $_url');
-              }
+              // final Uri _url = Uri.parse(
+              //     'https://cfcterminal.com/documentations/export-processing/');
+
+              // if (!await launchUrl(_url)) {
+              //   throw Exception('Could not launch $_url');
+              // }
             } else {
-              final Uri _url = Uri.parse(
-                  'https://cfcterminal.com/documentations/other-payment/');
+              Get.to(
+                () => WebViewGen(
+                  url: 'https://cfcterminal.com/blogs/',
+                ),
+              );
 
-              if (!await launchUrl(_url)) {
-                throw Exception('Could not launch $_url');
-              }
+              // final Uri _url = Uri.parse(
+              //     'https://cfcterminal.com/documentations/other-payment/');
+
+              // if (!await launchUrl(_url)) {
+              //   throw Exception('Could not launch $_url');
+              // }
             }
           },
           child: Row(

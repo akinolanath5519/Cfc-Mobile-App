@@ -1,7 +1,6 @@
 import 'package:cfc/widgets/size_utility.dart';
 import 'package:flutter/material.dart';
 
-
 String _appTheme = "primary";
 PrimaryColors get appTheme => ThemeHelper().themeColor();
 ThemeData get theme => ThemeHelper().themeData();
@@ -9,7 +8,6 @@ ThemeData get theme => ThemeHelper().themeData();
 /// Helper class for managing themes and colors.
 // ignore_for_file: must_be_immutable
 
-// ignore_for_file: must_be_immutable
 class ThemeHelper {
   // A map of custom color themes supported by the app
   Map<String, PrimaryColors> _supportedCustomColor = {

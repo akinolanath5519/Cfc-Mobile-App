@@ -1,6 +1,7 @@
+import 'package:cfc/screens/webview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:url_launcher/url_launcher.dart'; // Import for rootBundle
+import 'package:get/get.dart';
 
 class LogisticsPage extends StatefulWidget {
   const LogisticsPage({super.key});
@@ -63,16 +64,16 @@ class _LogisticsPageState extends State<LogisticsPage> {
                     },
                   ),
                   const SizedBox(width: 6), // Space between button and text
-                  const Expanded(
-                    child: Text(
-                      'Clearing Documents Processing',
-                      style: TextStyle(
-                        fontSize: 17, // Increased font size
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 235, 22, 11), // Red heading
-                      ),
-                    ),
-                  ),
+                  // const Expanded(
+                  //   child: Text(
+                  //     'Clearing Documents Processing',
+                  //     style: TextStyle(
+                  //       fontSize: 17, // Increased font size
+                  //       fontWeight: FontWeight.bold,
+                  //       color: Color.fromARGB(255, 235, 22, 11), // Red heading
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
               const SizedBox(height: 8), // Space between title and subtitle
@@ -86,10 +87,13 @@ class _LogisticsPageState extends State<LogisticsPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment
                         .center, // Center the button in the column
-                    children: List.generate(1, (index) {
+                    children: List.generate(4, (index) {
                       // Button labels for each option
                       final buttonLabels = [
                         'LOGISTICS PROCESSING',
+                        'CONTAINER STATUS',
+                        'CFC ACCREDITED AGENTS',
+                        'EXPORT PROCESSING',
                       ];
 
                       return Padding(
@@ -123,12 +127,38 @@ class _LogisticsPageState extends State<LogisticsPage> {
                                 _selectedOption =
                                     index + 1; // Update selected option
                               });
-                              final Uri _url = Uri.parse(
-                                  'https://cfcterminal.com/documentations/logistics-processing/');
+                              print("value $index");
 
-                              if (!await launchUrl(_url)) {
-                                throw Exception('Could not launch $_url');
+                              if (index == 0) {
+                                Get.to(() => WebViewGen(
+                                      url:
+                                          'https://cfcterminal.com/documentations/logistics-processing/',
+                                    ));
+                              } else if (index == 1) {
+                                Get.to(() => WebViewGen(
+                                      url:
+                                          'https://cfcterminal.com/documentations/view-container-status/',
+                                    ));
+                              } else if (index == 2) {
+                                Get.to(
+                                  () => WebViewGen(
+                                    url:
+                                        'https://cfcterminal.com/documentations/view-cfc-accredited-agents',
+                                  ),
+                                );
+                              } else {
+                                Get.to(() => WebViewGen(
+                                      url:
+                                          'https://cfcterminal.com/documentations/export-processing/',
+                                    ));
                               }
+
+                              // final Uri _url = Uri.parse(
+                              //     'https://cfcterminal.com/documentations/logistics-processing/');
+
+                              // if (!await launchUrl(_url)) {
+                              //   throw Exception('Could not launch $_url');
+                              // }
                             },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment
@@ -162,13 +192,17 @@ class _LogisticsPageState extends State<LogisticsPage> {
                                       setState(() {
                                         _selectedOption = value!;
                                       });
-                                      final Uri _url = Uri.parse(
-                                          'https://cfcterminal.com/documentations/logistics-processing/');
+                                      Get.to(() => WebViewGen(
+                                            url:
+                                                'https://cfcterminal.com/documentations/logistics-processing/',
+                                          ));
+                                      // final Uri _url = Uri.parse(
+                                      //     'https://cfcterminal.com/documentations/logistics-processing/');
 
-                                      if (!await launchUrl(_url)) {
-                                        throw Exception(
-                                            'Could not launch $_url');
-                                      }
+                                      // if (!await launchUrl(_url)) {
+                                      //   throw Exception(
+                                      //       'Could not launch $_url');
+                                      // }
                                     },
                                   ),
                                 ),

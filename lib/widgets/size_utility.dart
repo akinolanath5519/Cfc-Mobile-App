@@ -1,4 +1,3 @@
-import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 
 // These are used in the code as a reference to create your UI Responsively.
@@ -54,7 +53,6 @@ class Sizer extends StatelessWidget {
 }
 // ignore_for_file: must_be_immutable
 
-// ignore_for_file: must_be_immutable
 class SizeUtils {
   /// Device's BoxConstraints
   static late BoxConstraints boxConstraints;

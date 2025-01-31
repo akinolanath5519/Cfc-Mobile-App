@@ -52,7 +52,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDU4Mm4wP0pB1_8e_d-tBEEdr1vn9TgvsY',
-    appId: '1:535844648576:android:9c8af5f03cd5f41ed95865',
+    appId: '1:535844648576:android:8b7e80bb0aa072b7d95865',
     messagingSenderId: '535844648576',
     projectId: 'cfcfreight-e3e7e',
     storageBucket: 'cfcfreight-e3e7e.appspot.com',
@@ -85,4 +85,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'cfcfreight-e3e7e.appspot.com',
     measurementId: 'G-J3H1PXX86J',
   );
+
 }

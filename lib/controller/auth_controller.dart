@@ -1,7 +1,6 @@
 import 'package:cfc/widgets/bottom_navigation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -85,6 +84,7 @@ class AuthController extends GetxController {
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
+      Get.offAll(() => const Appbar());
 
       // Success feedback
       Get.snackbar(

@@ -1,6 +1,7 @@
+import 'package:cfc/screens/webview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:url_launcher/url_launcher.dart'; // Import for rootBundle
+import 'package:get/get.dart';
 
 class CustomDutyPage extends StatefulWidget {
   const CustomDutyPage({super.key});
@@ -42,7 +43,7 @@ class _CustomDutyPageState extends State<CustomDutyPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _buildHeader(),
+              // _buildHeader(),
               const SizedBox(height: 150), // Space before buttons
               _buildButtonList(), // Button list centered
             ],
@@ -65,31 +66,11 @@ class _CustomDutyPageState extends State<CustomDutyPage> {
     );
   }
 
-  Row _buildHeader() {
-    return Row(
-      children: [
-        IconButton(
-          icon: const Icon(Icons.arrow_back,
-              color: Colors.black), // Back button icon
-          onPressed: () => Navigator.pop(context), // Navigate back
-        ),
-        const SizedBox(width: 6), // Space between button and text
-        const Expanded(
-          child: Text(
-            'Custom Duty Processing',
-            style: TextStyle(
-              fontSize: 17,
-              fontWeight: FontWeight.bold,
-              color: Color.fromARGB(255, 235, 22, 11), // Red heading
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
   Expanded _buildButtonList() {
-    const buttonLabels = ['CUSTOM DUTY PROCESSING']; // Button labels
+    const buttonLabels = [
+      'CUSTOM DUTY PROCESSING',
+      'OTHER PAYMENT',
+    ]; // Button labels
 
     return Expanded(
       child: Center(
@@ -107,76 +88,113 @@ class _CustomDutyPageState extends State<CustomDutyPage> {
     );
   }
 
-  SizedBox _buildButton(String label, int index) {
-    return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.white
-              .withOpacity(0.85), // Slightly transparent white background
-          padding: const EdgeInsets.symmetric(
-              vertical: 10), // Increased height for buttons
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12), // Smooth corners
-            side: const BorderSide(
-              color:
-                  Color.fromARGB(255, 9, 134, 237), // Blue border for buttons
-              width: 2, // Border size
+  Widget _buildButton(String label, int value) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: SizedBox(
+        width: double.infinity,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.white.withOpacity(0.85),
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+              side: const BorderSide(
+                color: Color.fromARGB(255, 9, 134, 237),
+                width: 2,
+              ),
             ),
+            shadowColor: Colors.black.withOpacity(0.2),
+            elevation: 5,
           ),
-          shadowColor: Colors.black.withOpacity(0.2), // Add shadow color
-          elevation: 5, // Slight elevation for shadow effect
-        ),
-        onPressed: () async {
-          setState(() {
-            _selectedOption = index + 1; // Update selected option
-          });
-          final Uri _url = Uri.parse(
-              'https://cfcterminal.com/documentations/add-duty-payment/');
+          onPressed: () async {
+            _selectedOption = value; // Update selected option
+            setState(() {});
+            print("value $value");
 
-          if (!await launchUrl(_url)) {
-            throw Exception('Could not launch $_url');
-          }
-        },
-        child: _buildButtonContent(label, index),
+            if (value == 0) {
+              Get.to(() => WebViewGen(
+                    url:
+                        'https://cfcterminal.com/documentations/add-duty-payment/',
+                  ));
+              // final Uri _url = Uri.parse(
+              //     'https://cfcterminal.com/documentations/add-form-m/');
+
+              // if (!await launchUrl(_url)) {
+              //   throw Exception('Could not launch $_url');
+              // }
+            } else if (value == 1) {
+              Get.to(() => WebViewGen(
+                    url:
+                        'https://cfcterminal.com/documentations/other-payment/',
+                  ));
+              // final Uri _url =
+              //     Uri.parse('https://cfcterminal.com/documentations/add-paar/');
+
+              // if (!await launchUrl(_url)) {
+              //   throw Exception('Could not launch $_url');
+              // }
+            } else if (value == 3) {
+              Get.to(() => WebViewGen(
+                    url:
+                        'https://cfcterminal.com/documentations/export-processing/',
+                  ));
+
+              // final Uri _url = Uri.parse(
+              //     'https://cfcterminal.com/documentations/export-processing/');
+
+              // if (!await launchUrl(_url)) {
+              //   throw Exception('Could not launch $_url');
+              // }
+            } else {
+              Get.to(() => WebViewGen(
+                    url:
+                        'https://cfcterminal.com/documentations/other-payment/',
+                  ));
+
+              // final Uri _url = Uri.parse(
+              //     'https://cfcterminal.com/documentations/other-payment/');
+
+              // if (!await launchUrl(_url)) {
+              //   throw Exception('Could not launch $_url');
+              // }
+            }
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text(
+                  label,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: Colors.red,
+                  ),
+                ),
+              ),
+              _buildRadio(value),
+            ],
+          ),
+        ),
       ),
     );
   }
 
-  Row _buildButtonContent(String label, int index) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment
-          .spaceBetween, // Space between label and radio button
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Text(
-            label,
-            style: const TextStyle(
-              fontSize: 14,
-              color: Colors.red, // Red text color
-            ),
-          ),
-        ),
-        Theme(
-          data: ThemeData(
-            unselectedWidgetColor:
-                Colors.red, // Red border for unselected radio button
-          ),
-          child: Radio(
-            value: index + 1,
-            groupValue: _selectedOption,
-            activeColor: Colors.red, // Red color for active radio button
-            visualDensity: const VisualDensity(
-                horizontal: -2, vertical: -2), // Increase the size
-            onChanged: (int? value) {
-              setState(() {
-                _selectedOption = value!;
-              });
-            },
-          ),
-        ),
-      ],
+  Widget _buildRadio(int value) {
+    return Theme(
+      data: ThemeData(unselectedWidgetColor: Colors.red),
+      child: Radio(
+        value: value,
+        groupValue: _selectedOption,
+        activeColor: Colors.red,
+        visualDensity: const VisualDensity(horizontal: -2, vertical: -2),
+        onChanged: (int? newValue) {
+          setState(() {
+            _selectedOption = newValue!;
+          });
+        },
+      ),
     );
   }
 }

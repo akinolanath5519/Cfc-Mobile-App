@@ -1,4 +1,3 @@
-
 import 'package:cfc/screens/onboarding/sign_up.dart';
 import 'package:cfc/widgets/btn_gen.dart';
 import 'package:cfc/widgets/size_utility.dart';
@@ -41,7 +40,7 @@ class LoginScreen extends GetView<AuthController> {
             child: SizedBox(
               height: SizeUtils.height,
               child: Form(
-               // key: controller.loginCreateAccount,
+                // key: controller.loginCreateAccount,
                 child: Container(
                   width: double.maxFinite,
                   padding: EdgeInsets.symmetric(horizontal: 26.h),
@@ -65,7 +64,6 @@ class LoginScreen extends GetView<AuthController> {
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              
                               SizedBox(height: 9.v),
                               Padding(
                                 padding: EdgeInsets.only(left: 1.h),
@@ -156,19 +154,19 @@ class LoginScreen extends GetView<AuthController> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  GestureDetector(
-                                      onTap: () {
-                                        // Get.to(
-                                        //   () => ForgotPasswordScreen(),
-                                        //   binding: AuthBinding(),
-                                        // );
-                                      },
-                                      child: Text(
-                                        "Forget password?",
-                                        style: theme.textTheme.bodyMedium
-                                            ?.copyWith(
-                                                fontWeight: FontWeight.w700),
-                                      ))
+                                  // GestureDetector(
+                                  //     onTap: () {
+                                  //       // Get.to(
+                                  //       //   () => ForgotPasswordScreen(),
+                                  //       //   binding: AuthBinding(),
+                                  //       // );
+                                  //     },
+                                  //     child: Text(
+                                  //       "Forget password?",
+                                  //       style: theme.textTheme.bodyMedium
+                                  //           ?.copyWith(
+                                  //               fontWeight: FontWeight.w700),
+                                  //     ))
                                 ],
                               ),
                               Spacer(),
@@ -188,8 +186,7 @@ class LoginScreen extends GetView<AuthController> {
                                           fontWeight: FontWeight.bold),
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = () {
-                                          Get.to(
-                                              CreateAccountScreen()); 
+                                          Get.to(CreateAccountScreen());
                                         },
                                     )
                                   ],
